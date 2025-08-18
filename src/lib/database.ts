@@ -25,6 +25,31 @@ export const getPublicMessages = async (): Promise<Message[]> => {
   return data || [];
 };
 
+export const uploadVoiceNote = async (voiceNote: Blob, userName: string): Promise<string | null> => {
+  try {
+    const fileName = `${userName.replace(/\s+/g, '_')}_${Date.now()}.webm`;
+    const { data, error } = await supabase.storage
+      .from('voicenotes')
+      .upload(fileName, voiceNote, {
+        cacheControl: '3600',
+        upsert: false,
+      });
+
+    if (error) {
+      throw error;
+    }
+
+    const { data: publicUrlData } = supabase.storage
+      .from('voicenotes')
+      .getPublicUrl(data.path);
+
+    return publicUrlData.publicUrl;
+  } catch (error) {
+    console.error('Error uploading voice note:', error);
+    return null;
+  }
+};
+
 export const addMessage = async (message: Omit<Message, 'id' | 'created_at'>): Promise<Message | null> => {
   const { data, error } = await supabase
     .from('messages')
