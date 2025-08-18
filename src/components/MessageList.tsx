@@ -17,8 +17,7 @@ const MessageList: React.FC = () => {
 
     fetchMessages();
 
-
-    const interval = setInterval(fetchMessages, 30000);
+    const interval = setInterval(fetchMessages, 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -26,6 +25,7 @@ const MessageList: React.FC = () => {
     return (
       <div className="text-center py-20">
         <FaCommentDots className="animate-pulse text-4xl text-gray-400 mx-auto" />
+        <p className="mt-4 text-muted-text">Loading messages...</p>
       </div>
     );
   }
