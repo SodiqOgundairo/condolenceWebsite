@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { getAllMessages } from '../lib/database';
 import type { Message } from '../lib/database';
 import { FaSpinner } from 'react-icons/fa';
 
