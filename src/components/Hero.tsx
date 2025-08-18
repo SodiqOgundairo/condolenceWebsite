@@ -10,6 +10,7 @@ const Hero: React.FC = () => {
         We cherish the time we had and the memories we made. Thank you for being a part of his story. Please feel free to share a message or a memory.
       </p>
     </div>
+
   );
 };
 
