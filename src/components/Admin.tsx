@@ -34,6 +34,16 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
 
   if (!isAuthenticated) {
     return (
+
+      <div className="min-h-screen bg-dark-bg flex flex-col items-center justify-center p-4">
+        <div className="w-full max-w-sm mx-auto">
+            <div className="bg-dark-card p-8 rounded-xl shadow-lg">
+            <h1 className="text-3xl font-display font-bold text-center text-light-text mb-2">Admin Login</h1>
+            <p className="text-center text-muted-text mb-6">Welcome, Fe</p>
+            <form onSubmit={handleLogin}>
+                <div className="mb-4">
+                <label className="block text-light-text mb-2" htmlFor="username">
+
       <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-sm mx-auto">
             <div className="bg-white p-8 rounded-xl shadow-lg">
@@ -42,6 +52,7 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
             <form onSubmit={handleLogin}>
                 <div className="mb-4">
                 <label className="block text-gray-700 mb-2" htmlFor="username">
+
                     Username
                 </label>
                 <input
@@ -49,11 +60,19 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
                     id="username"
                     value="Fe"
                     readOnly
+
+                    className="w-full px-4 py-2 border rounded-lg bg-gray-600 border-gray-500 text-light-text cursor-not-allowed"
+                />
+                </div>
+                <div className="mb-6">
+                <label className="block text-light-text mb-2" htmlFor="password">
+
                     className="w-full px-4 py-2 border rounded-lg bg-gray-200 cursor-not-allowed"
                 />
                 </div>
                 <div className="mb-6">
                 <label className="block text-gray-700 mb-2" htmlFor="password">
+
                     Password
                 </label>
                 <input
@@ -61,11 +80,24 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+
+                    className="w-full px-4 py-2 border rounded-lg bg-gray-700 border-gray-600 text-light-text focus:outline-none focus:ring-2 focus:ring-primary"
+
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+
                 />
                 </div>
                 <button
                 type="submit"
+                className="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-blue-500 transition duration-300"
+                >
+                Login
+                </button>
+                {error && <p className="text-red-400 text-center mt-4">{error}</p>}
+            </form>
+            </div>
+            <button onClick={onNavigateBack} className="text-sm text-muted-text hover:text-primary mt-4 block w-full text-center">
+
                 className="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition duration-300"
                 >
                 Login
@@ -74,6 +106,7 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
             </form>
             </div>
             <button onClick={onNavigateBack} className="text-sm text-gray-600 hover:underline mt-4 block w-full text-center">
+
                 &larr; Back to main site
             </button>
         </div>
@@ -82,35 +115,60 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
   }
 
   return (
+    <div className="min-h-screen bg-dark-bg p-4 md:p-8">
+      <div className="container mx-auto">
+        <div className="flex justify-between items-center mb-8">
+            <h1 className="text-2xl md:text-3xl font-display font-bold text-light-text">All Messages</h1>
+            <button onClick={onNavigateBack} className="text-sm text-primary hover:underline">
+
     <div className="min-h-screen bg-gray-100 p-4 md:p-8">
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-8">
             <h1 className="text-2xl md:text-3xl font-bold">All Messages</h1>
             <button onClick={onNavigateBack} className="text-sm text-blue-500 hover:underline">
+
                 &larr; Back to main site
             </button>
         </div>
 
         {loading ? (
           <div className="text-center py-20">
+
+            <FaSpinner className="animate-spin text-4xl text-muted-text mx-auto" />
+            <p className="mt-4 text-muted-text">Loading messages...</p>
+          </div>
+        ) : (
+          <div className="bg-dark-card rounded-lg shadow-md">
+            <ul className="divide-y divide-gray-700">
+
             <FaSpinner className="animate-spin text-4xl text-gray-400 mx-auto" />
             <p className="mt-4 text-gray-500">Loading messages...</p>
           </div>
         ) : (
           <div className="bg-white rounded-lg shadow-md">
             <ul className="divide-y divide-gray-200">
+
               {messages.map((msg) => (
                 <li key={msg.id} className="p-4 md:p-6">
                   <div className="flex justify-between items-start">
                     <div className='max-w-full'>
+
+                        <p className="text-light-text whitespace-pre-wrap break-words">{msg.message}</p>
+                        <p className="text-sm text-muted-text mt-2">- {msg.name}</p>
+
                         <p className="text-gray-800 whitespace-pre-wrap break-words">{msg.message}</p>
                         <p className="text-sm text-gray-500 mt-2">- {msg.name}</p>
+
                     </div>
                     <span
                       className={`ml-2 flex-shrink-0 px-3 py-1 text-xs font-semibold rounded-full ${
                         msg.is_public
+                          ? 'bg-green-200 text-green-900'
+                          : 'bg-yellow-200 text-yellow-900'
+
                           ? 'bg-green-100 text-green-800'
                           : 'bg-red-100 text-red-800'
+
                       }`}
                     >
                       {msg.is_public ? 'Public' : 'Private'}
