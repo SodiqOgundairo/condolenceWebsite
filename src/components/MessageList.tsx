@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getPublicMessages, Message } from '../lib/database';
+import { getPublicMessages } from '../lib/database';
+import type { Message } from '../lib/database';
 import { FaCommentDots } from 'react-icons/fa';
 
 const MessageList: React.FC = () => {
