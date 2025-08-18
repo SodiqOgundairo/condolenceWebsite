@@ -23,21 +23,34 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
     if (isAuthenticated) {
       const fetchMessages = async () => {
         setLoading(true);
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const secretKey = import.meta.env.VITE_MESSAGES_SECRET_KEY;
+
+        if (!supabaseUrl || !secretKey) {
+          setError("Supabase URL or secret key is not configured. Please check your environment variables.");
+          setLoading(false);
+          return;
+        }
+
         try {
-          const functionUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-all-messages`;
+          const functionUrl = `${supabaseUrl}/functions/v1/get-all-messages`;
           const response = await fetch(functionUrl, {
             headers: {
-              'Authorization': `Bearer ${import.meta.env.VITE_MESSAGES_SECRET_KEY}`
+              'Authorization': `Bearer ${secretKey}`
             }
           });
           if (!response.ok) {
-            throw new Error('Failed to fetch messages');
+            const errorText = await response.text();
+            throw new Error(`Failed to fetch messages: ${response.status} ${errorText}`);
           }
           const data = await response.json();
+          if (data.error) {
+            throw new Error(data.error);
+          }
           setMessages(data.messages);
-        } catch (error) {
+        } catch (error: any) {
           console.error("Error fetching messages:", error);
-          setError("Could not load messages.");
+          setError(error.message || "Could not load messages.");
         } finally {
           setLoading(false);
         }
