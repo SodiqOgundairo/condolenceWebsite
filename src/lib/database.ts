@@ -25,20 +25,6 @@ export const getPublicMessages = async (): Promise<Message[]> => {
   return data || [];
 };
 
-export const getAllMessages = async (): Promise<Message[]> => {
-  const { data, error } = await supabase
-    .from('messages')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    console.error('Error fetching all messages:', error);
-    return [];
-  }
-
-  return data || [];
-};
-
 export const addMessage = async (message: Omit<Message, 'id' | 'created_at'>): Promise<Message | null> => {
   const { data, error } = await supabase
     .from('messages')
