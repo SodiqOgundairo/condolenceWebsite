@@ -34,7 +34,6 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
 
   if (!isAuthenticated) {
     return (
-
       <div className="min-h-screen bg-dark-bg flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-sm mx-auto">
             <div className="bg-dark-card p-8 rounded-xl shadow-lg">
@@ -50,7 +49,6 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
                     id="username"
                     value="Fe"
                     readOnly
-
                     className="w-full px-4 py-2 border rounded-lg bg-gray-600 border-gray-500 text-light-text cursor-not-allowed"
                 />
                 </div>
@@ -107,7 +105,6 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
                     <div className='max-w-full'>
                         <p className="text-light-text whitespace-pre-wrap break-words">{msg.message}</p>
                         <p className="text-sm text-muted-text mt-2">- {msg.name}</p>
-
                     </div>
                     <span
                       className={`ml-2 flex-shrink-0 px-3 py-1 text-xs font-semibold rounded-full ${
