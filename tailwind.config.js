@@ -9,17 +9,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': '#3B82F6', // A brighter blue for better contrast on dark bg
-        'secondary': '#1E3A8A', // A deeper blue
-        'accent': '#F59E0B', // A warm amber/orange for contrast
-        'dark-bg': '#111827',    // Main dark background
-        'dark-card': '#1F2937', // A slightly lighter dark for cards
-        'light-text': '#F9FAFB', // Light text for dark backgrounds
-        'muted-text': '#9CA3AF', // Muted/gray text for dark backgrounds
+        'background': '#F8F7F4',
+        'surface': '#FFFFFF',
+        'primary': '#6D8B74',
+        'secondary': '#A2B29F',
+        'text-primary': '#3C403D',
+        'text-secondary': '#5A5A5A',
+        'accent': '#E5E5E5',
       },
       fontFamily: {
-        sans: ['Inter', ...fontFamily.sans],
-        display: ['Poppins', ...fontFamily.sans],
+        sans: ['Lato', ...fontFamily.sans],
+        display: ['Cormorant Garamond', ...fontFamily.serif],
       },
     },
   },
