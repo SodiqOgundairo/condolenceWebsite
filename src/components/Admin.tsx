@@ -23,8 +23,8 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
     if (isAuthenticated) {
       const fetchMessages = async () => {
         setLoading(true);
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-        const secretKey = import.meta.env.VITE_MESSAGES_SECRET_KEY;
+        const supabaseUrl = import.meta.env.SUPABASE_URL;
+        const secretKey = import.meta.env.MESSAGES_SECRET_KEY;
 
         if (!supabaseUrl || !secretKey) {
           setError("Supabase URL or secret key is not configured. Please check your environment variables.");
