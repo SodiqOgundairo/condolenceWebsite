@@ -9,8 +9,6 @@ function App() {
   const [view, setView] = useState<'main' | 'admin'>('main');
 
   const navigateToAdmin = () => {
-    // This will be triggered from the footer.
-    // A simple way to switch views without a router.
     setView('admin');
   };
 
@@ -23,10 +21,7 @@ function App() {
   }
 
   return (
-
     <div className="bg-dark-bg font-sans text-light-text min-h-screen">
-
-    <div className="bg-gray-50 font-sans text-gray-800">
 
       <main>
         <Hero />

@@ -22,7 +22,6 @@ export default {
         display: ['Poppins', ...fontFamily.sans],
       },
     },
-    extend: {},
   },
   plugins: [],
 }
