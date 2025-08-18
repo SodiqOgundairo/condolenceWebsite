@@ -13,7 +13,7 @@ Deno.serve(async (req) => {
 
   try {
     const authHeader = req.headers.get('Authorization')
-    if (authHeader !== `Bearer ${Deno.env.get('MESSAGES_SECRET_KEY')}`) {
+    if (authHeader !== `Bearer ${Deno.env.get('VITE_MESSAGES_SECRET_KEY')}`) {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 401,
@@ -21,8 +21,8 @@ Deno.serve(async (req) => {
     }
 
     const supabaseAdmin = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+      Deno.env.get('VITE_SUPABASE_URL') ?? '',
+      Deno.env.get('VITE_SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
     const { data, error } = await supabaseAdmin.from('messages').select('*').order('created_at', { ascending: false });
