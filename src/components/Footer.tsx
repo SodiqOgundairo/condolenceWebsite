@@ -9,7 +9,6 @@ const Footer: React.FC = () => {
         <Link to="/admin" className="text-sm text-text-secondary hover:text-primary mt-2 focus:outline-none">
           Admin Login
         </Link>
-
       </div>
     </footer>
   );

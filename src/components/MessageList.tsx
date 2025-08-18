@@ -26,7 +26,6 @@ const MessageList: React.FC = () => {
       <div className="text-center py-20">
         <FaCommentDots className="animate-pulse text-4xl text-secondary mx-auto" />
         <p className="mt-4 text-text-secondary">Loading messages...</p>
-
       </div>
     );
   }
