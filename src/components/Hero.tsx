@@ -3,7 +3,7 @@ import React from 'react';
 const Hero: React.FC = () => {
   return (
     <header className="bg-surface" data-aos="fade-in">
-      <div className="container mx-auto px-4 py-20 text-center">
+      <div className="w-4/5 mx-auto px-4 py-20 text-center">
         <h1 className="text-4xl md:text-5xl font-display font-bold text-text-primary mb-4">
           In Loving Memory of a Dear Father
         </h1>

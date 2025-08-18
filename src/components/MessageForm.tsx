@@ -96,32 +96,43 @@ const MessageForm: React.FC = () => {
         setName('');
         setMessage('');
         resetRecording();
-        setTimeout(() => setSuccess(false), 5000);
+        setTimeout(() => setSuccess(false), 10000);
       } else {
-        throw new Error('Supabase returned null while adding the message.');
+        throw new Error("There's an issue, we're fixing it, please try again shortly");
       }
     } catch (err: any) {
       console.error("Error submitting message:", err);
       setError(err.message || 'There was an error submitting your message. Please try again.');
-      setTimeout(() => setError(null), 5000);
+      setTimeout(() => setError(null), 10000);
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <section className="py-16 bg-background" data-aos="fade-up">
-      <div className="container mx-auto px-4 max-w-2xl">
-        <h2 className="text-3xl font-display font-bold text-center text-text-primary mb-8">Share a Message</h2>
+    <section className="py-16 bg-background flex flex-col md:flex-row justify-center gap-5 items-center px-10  md:px-20" data-aos="fade-up">
+      <header className="bg-surface mx-auto md:w-1/3" data-aos="fade-in">
+        <div className=" ">
+          <h1 className="text-4xl md:text-5xl font-display font-bold text-text-primary text-gray-800">
+            In Loving Memory of a Dear Father
+          </h1>
+          <p className="text-lg text-text-secondary italic max-w-3xl mx-auto">
+            We gather here to celebrate a life well-lived and to share the memories that will forever be in our hearts. Your words of comfort and shared stories are a precious gift to our family during this time of loss.
+          </p>
+        </div>
+      </header>
+
+      <div className="container mx-auto md:w-3/6 shadow-2xs border border-gray-200 rounded-lg pt-8">
+        <h2 className="text-2xl font-display font-bold text-center text-text-primary mb-8">Share a Message</h2>
 
         <div className="flex justify-center mb-6">
-          <div className="bg-surface p-1 rounded-full flex">
-            <button onClick={() => setMessageType('text')} className={`px-4 py-1 rounded-full text-sm font-bold ${messageType === 'text' ? 'bg-primary text-white' : 'text-text-secondary'}`}>Text</button>
-            <button onClick={() => setMessageType('voicenote')} className={`px-4 py-1 rounded-full text-sm font-bold ${messageType === 'voicenote' ? 'bg-primary text-white' : 'text-text-secondary'}`}>Voice Note</button>
+          <div className="bg-surface gap-10 p-1 m-3 rounded-full flex bg-gray-200 container justify-center">
+            <button onClick={() => setMessageType('text')} className={`px-4 py-1 rounded-full text-sm font-bold ${messageType === 'text' ? 'bg-black container text-white' : 'container text-text-secondary'}`}>Text</button>
+            <button onClick={() => setMessageType('voicenote')} className={`px-4 py-1 rounded-full text-sm font-bold ${messageType === 'voicenote' ? 'bg-black container text-white' : 'container text-text-secondary'}`}>Voice Note</button>
           </div>
         </div>
 
-        <div className="bg-surface p-8 rounded-lg shadow-lg">
+        <div className="bg-surface p-6 rounded-lg shadow-lg">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-text-secondary font-bold mb-2">Your Name</label>
@@ -171,7 +182,7 @@ const MessageForm: React.FC = () => {
               </div>
             )}
 
-            <div className="mb-6">
+            <div className="">
               <label className="flex items-center">
                 <input
                   type="checkbox"

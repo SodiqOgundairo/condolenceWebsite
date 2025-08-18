@@ -31,27 +31,49 @@ const MessageList: React.FC = () => {
   }
 
   return (
-    <section className="py-16 bg-background" data-aos="fade-up">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <h2 className="text-3xl font-display font-bold text-center text-text-primary mb-12">Messages of Comfort</h2>
-        {messages.length === 0 ? (
-          <p className="text-center text-text-secondary">Be the first to share a message.</p>
-        ) : (
-          <div className="space-y-8">
-            {messages.map((msg) => (
-              <article key={msg.id} className="bg-surface p-6 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg" data-aos="fade-up">
-                {msg.message_type === 'voicenote' && msg.voicenote_url ? (
-                  <audio controls src={msg.voicenote_url} className="w-full" />
-                ) : (
-                  <p className="text-text-primary text-lg whitespace-pre-wrap">{msg.message}</p>
-                )}
-                <p className="text-right text-text-secondary mt-4">- {msg.name}</p>
-              </article>
-            ))}
-          </div>
-        )}
+<section className="py-16 mx-auto" data-aos="fade-up">
+  <div className="container mx-auto px-4 max-w-6xl">
+    <h2 className="text-3xl font-display font-bold text-center text-text-primary mb-12">
+      Messages of Comfort
+    </h2>
+    {messages.length === 0 ? (
+      <p className="text-center text-text-secondary">
+        Be the first to share a message.
+      </p>
+    ) : (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {messages.map((msg) => (
+          <article
+            key={msg.id}
+            className="bg-surface border border-border rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 group"
+            data-aos="fade-up"
+          >
+            {msg.message_type === 'voicenote' && msg.voicenote_url ? (
+              <div className="flex flex-col items-center">
+                <audio
+                  controls
+                  src={msg.voicenote_url}
+                  className="w-full rounded-md border border-border"
+                />
+                <p className="mt-4 text-sm text-text-secondary italic">
+                  Voice note from {msg.name}
+                </p>
+              </div>
+            ) : (
+              <p className="text-text-primary text-base leading-relaxed whitespace-pre-wrap">
+                {msg.message}
+              </p>
+            )}
+            <p className="text-right text-sm text-text-secondary mt-6 font-medium">
+              — {msg.name}
+            </p>
+          </article>
+        ))}
       </div>
-    </section>
+    )}
+  </div>
+</section>
+
   );
 };
 
