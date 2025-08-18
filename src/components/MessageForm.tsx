@@ -45,6 +45,19 @@ const MessageForm: React.FC = () => {
       setSubmitting(false);
       setError('There was an error submitting your message. Please try again.');
       setTimeout(() => setError(null), 5000);
+
+    const result = await addMessage(newMessage);
+    setSubmitting(false);
+
+    if (result) {
+      setSuccess(true);
+      setName('');
+      setMessage('');
+      setTimeout(() => setSuccess(false), 5000); // Reset success message
+    } else {
+      setError('There was an error submitting your message. Please try again.');
+      setTimeout(() => setError(null), 5000); // Reset error message
+
     }
   };
 
@@ -56,24 +69,44 @@ const MessageForm: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-light-text font-bold mb-2">Your Name</label>
+
+    <section className="py-16 bg-gray-100" data-aos="fade-up">
+      <div className="container mx-auto px-4 max-w-2xl">
+        <h2 className="text-3xl font-bold text-center mb-8">Share a Message</h2>
+        <div className="bg-white p-8 rounded-lg shadow-lg">
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Your Name</label>
+
               <input
                 type="text"
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+
                 className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-light-text focus:outline-none focus:ring-2 focus:ring-primary"
+
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+
                 placeholder="e.g., John Doe"
                 disabled={submitting}
               />
             </div>
             <div className="mb-4">
+
               <label htmlFor="message" className="block text-light-text font-bold mb-2">Your Message</label>
+
+              <label htmlFor="message" className="block text-gray-700 font-bold mb-2">Your Message</label>
+
               <textarea
                 id="message"
                 rows={5}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-light-text focus:outline-none focus:ring-2 focus:ring-primary"
+
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+
                 placeholder="Share a memory or a message of comfort..."
                 disabled={submitting}
               ></textarea>
@@ -88,12 +121,19 @@ const MessageForm: React.FC = () => {
                   disabled={submitting}
                 />
                 <span className="ml-2 text-light-text">Make this message public</span>
+                  className="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  disabled={submitting}
+                />
+                <span className="ml-2 text-gray-700">Make this message public</span>
               </label>
             </div>
             <div className="text-center">
               <button
                 type="submit"
                 className="bg-primary text-white font-bold py-3 px-8 rounded-full hover:bg-blue-500 transition duration-300 flex items-center justify-center w-full md:w-auto disabled:bg-gray-500"
+
+                className="bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition duration-300 flex items-center justify-center w-full md:w-auto disabled:bg-gray-400"
+
                 disabled={submitting}
               >
                 {submitting ? (
@@ -110,11 +150,17 @@ const MessageForm: React.FC = () => {
           </form>
           {success && (
             <div className="mt-4 text-center text-green-400 flex items-center justify-center">
+
+            <div className="mt-4 text-center text-green-600 flex items-center justify-center">
+
               <FaCheckCircle className="mr-2" /> Thank you for your heartfelt message.
             </div>
           )}
           {error && (
             <div className="mt-4 text-center text-red-400 flex items-center justify-center">
+
+            <div className="mt-4 text-center text-red-600 flex items-center justify-center">
+
               <FaExclamationCircle className="mr-2" /> {error}
             </div>
           )}
