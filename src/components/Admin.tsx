@@ -24,9 +24,23 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
     if (isAuthenticated) {
       const fetchMessages = async () => {
         setLoading(true);
-        const allMessages = await getAllMessages();
-        setMessages(allMessages);
-        setLoading(false);
+        try {
+          const response = await fetch('/api/get-all-messages', {
+            headers: {
+              'Authorization': `Bearer ${import.meta.env.VITE_MESSAGES_SECRET_KEY}`
+            }
+          });
+          if (!response.ok) {
+            throw new Error('Failed to fetch messages');
+          }
+          const data = await response.json();
+          setMessages(data.messages);
+        } catch (error) {
+          console.error("Error fetching messages:", error);
+          setError("Could not load messages.");
+        } finally {
+          setLoading(false);
+        }
       };
       fetchMessages();
     }
