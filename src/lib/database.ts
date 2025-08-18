@@ -50,16 +50,15 @@ export const uploadVoiceNote = async (voiceNote: Blob, userName: string): Promis
   }
 };
 
-export const addMessage = async (message: Omit<Message, 'id' | 'created_at'>): Promise<Message | null> => {
-  const { data, error } = await supabase
+export const addMessage = async (message: Omit<Message, 'id' | 'created_at'>): Promise<boolean> => {
+  const { error } = await supabase
     .from('messages')
-    .insert([message])
-    .select();
+    .insert([message]);
 
   if (error) {
     console.error('Error adding message:', error);
-    return null;
+    return false;
   }
 
-  return data ? data[0] : null;
+  return true;
 };

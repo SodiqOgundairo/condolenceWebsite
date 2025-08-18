@@ -90,15 +90,15 @@ const MessageForm: React.FC = () => {
         voicenote_url: voiceNoteUrl,
       };
 
-      const result = await addMessage(newMessage);
-      if (result) {
+      const success = await addMessage(newMessage);
+      if (success) {
         setSuccess(true);
         setName('');
         setMessage('');
         resetRecording();
         setTimeout(() => setSuccess(false), 5000);
       } else {
-        throw new Error('Supabase returned null while adding the message.');
+        throw new Error('Failed to add message to the database.');
       }
     } catch (err: any) {
       console.error("Error submitting message:", err);
@@ -172,16 +172,23 @@ const MessageForm: React.FC = () => {
             )}
 
             <div className="mb-6">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={isPublic}
-                  onChange={(e) => setIsPublic(e.target.checked)}
-                  className="h-5 w-5 text-primary bg-background border-accent rounded focus:ring-primary"
+              <div className="flex items-center justify-between">
+                <label className="text-text-secondary">Make this message public for others to see</label>
+                <button
+                  type="button"
+                  onClick={() => setIsPublic(!isPublic)}
+                  className={`${
+                    isPublic ? 'bg-primary' : 'bg-gray-400'
+                  } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2`}
                   disabled={submitting}
-                />
-                <span className="ml-2 text-text-secondary">Make this message public for others to see</span>
-              </label>
+                >
+                  <span
+                    className={`${
+                      isPublic ? 'translate-x-6' : 'translate-x-1'
+                    } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+                  />
+                </button>
+              </div>
             </div>
             <div className="text-center">
               <button

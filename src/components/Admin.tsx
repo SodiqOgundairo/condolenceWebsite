@@ -24,7 +24,8 @@ const Admin: React.FC<{ onNavigateBack: () => void }> = ({ onNavigateBack }) => 
       const fetchMessages = async () => {
         setLoading(true);
         try {
-          const response = await fetch('/api/get-all-messages', {
+          const functionUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-all-messages`;
+          const response = await fetch(functionUrl, {
             headers: {
               'Authorization': `Bearer ${import.meta.env.VITE_MESSAGES_SECRET_KEY}`
             }
