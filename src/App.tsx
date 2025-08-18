@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './assets/css/App.css'
+import { useState } from 'react';
+import Admin from './components/Admin';
+import Footer from './components/Footer';
+import Hero from './components/Hero';
+import MessageForm from './components/MessageForm';
+import MessageList from './components/MessageList';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [view, setView] = useState<'main' | 'admin'>('main');
+
+  const navigateToAdmin = () => {
+    // This will be triggered from the footer.
+    // A simple way to switch views without a router.
+    setView('admin');
+  };
+
+  const navigateToMain = () => {
+    setView('main');
+  }
+
+  if (view === 'admin') {
+    return <Admin onNavigateBack={navigateToMain} />;
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="bg-dark-bg font-sans text-light-text min-h-screen">
+      <main>
+        <Hero />
+        <MessageForm />
+        <MessageList />
+      </main>
+      <Footer onAdminClick={navigateToAdmin} />
+    </div>
+  );
 }
 
-export default App
+export default App;
