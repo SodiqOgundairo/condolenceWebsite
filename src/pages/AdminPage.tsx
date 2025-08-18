@@ -12,7 +12,7 @@ const AdminPage: React.FC = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'edameg') {
+    if (password === import.meta.env.VITE_ADMIN_PASSWORD) {
       setIsAuthenticated(true);
       setError('');
     } else {
@@ -56,7 +56,7 @@ const AdminPage: React.FC = () => {
         <div className="w-full max-w-sm mx-auto">
             <div className="bg-surface p-8 rounded-xl shadow-lg">
             <h1 className="text-3xl font-display text-text-primary text-center mb-2">Admin Login</h1>
-            <p className="text-center text-text-secondary mb-6">Welcome, Fe</p>
+            {/* <p className="text-center text-text-secondary mb-6">Welcome, Fe</p> */}
             <form onSubmit={handleLogin}>
                 <div className="mb-4">
                 <label className="block text-text-secondary mb-2" htmlFor="username">
@@ -84,7 +84,7 @@ const AdminPage: React.FC = () => {
                 </div>
                 <button
                 type="submit"
-                className="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-opacity-90 transition duration-300"
+                className="w-full bg-gray-600 text-white font-bold py-3 rounded-lg hover:bg-opacity-90 transition duration-300"
                 >
                 Login
                 </button>
