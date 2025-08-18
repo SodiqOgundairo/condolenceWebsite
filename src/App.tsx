@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Admin from './components/Admin';
 import Footer from './components/Footer';
 // import Hero from './components/Hero';
@@ -8,13 +8,28 @@ import MessageList from './components/MessageList';
 function App() {
   const [view, setView] = useState<'main' | 'admin'>('main');
 
-  const navigateToAdmin = () => {
-    setView('admin');
-  };
+  useEffect(() => {
+    const handleLocationChange = () => {
+      if (window.location.pathname === '/admin') {
+        setView('admin');
+      } else {
+        setView('main');
+      }
+    };
+
+    handleLocationChange(); // Check on initial load
+    window.addEventListener('popstate', handleLocationChange); // Check on back/forward
+
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+    };
+  }, []);
 
   const navigateToMain = () => {
-    setView('main');
-  }
+    window.history.pushState({}, '', '/');
+    const navEvent = new PopStateEvent('popstate');
+    window.dispatchEvent(navEvent);
+  };
 
   if (view === 'admin') {
     return <Admin onNavigateBack={navigateToMain} />;
@@ -29,7 +44,7 @@ function App() {
         {/* </div> */}
         <MessageList />
       </main>
-      <Footer onAdminClick={navigateToAdmin} />
+      <Footer />
     </div>
   );
 }

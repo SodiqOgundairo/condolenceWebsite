@@ -90,8 +90,8 @@ const MessageForm: React.FC = () => {
         voicenote_url: voiceNoteUrl,
       };
 
-      const result = await addMessage(newMessage);
-      if (result) {
+      const success = await addMessage(newMessage);
+      if (success) {
         setSuccess(true);
         setName('');
         setMessage('');
@@ -182,22 +182,39 @@ const MessageForm: React.FC = () => {
               </div>
             )}
 
-            <div className="">
+{/* <<<<<<< HEAD */}
+            {/* <div className="">
               <label className="flex items-center">
                 <input
                   type="checkbox"
                   checked={isPublic}
                   onChange={(e) => setIsPublic(e.target.checked)}
-                  className="h-5 w-5 text-primary bg-background border-accent rounded focus:ring-primary"
+                  className="h-5 w-5 text-primary bg-background border-accent rounded focus:ring-primary" */}
+
+            <div className="mb-6">
+              <div className="flex items-center justify-between">
+                <label className="text-text-secondary text-sm italic">Make this message public for others to see</label>
+                <button
+                  type="button"
+                  onClick={() => setIsPublic(!isPublic)}
+                  className={`${
+                    isPublic ? 'bg-gray-900' : 'bg-gray-300'
+                  } relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
+
                   disabled={submitting}
-                />
-                <span className="ml-2 text-text-secondary">Make this message public for others to see</span>
-              </label>
+                >
+                  <span
+                    className={`${
+                      isPublic ? 'translate-x-6' : 'translate-x-1'
+                    } inline-block h-4 w-4 transform rounded-full bg-gray-600 transition-transform`}
+                  />
+                </button>
+              </div>
             </div>
             <div className="text-center">
               <button
                 type="submit"
-                className="bg-primary text-white font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition duration-300 flex items-center justify-center w-full disabled:bg-gray-400"
+                className="bg-gray-400 text-black font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition duration-300 flex items-center justify-center w-full disabled:bg-gray-400"
                 disabled={submitting}
               >
                 {submitting ? (
