@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { addMessage, Message } from '../lib/database';
+import { addMessage } from '../lib/database';
+import type { Message } from '../lib/database';
 import { FaPaperPlane, FaSpinner, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 
 const MessageForm: React.FC = () => {
