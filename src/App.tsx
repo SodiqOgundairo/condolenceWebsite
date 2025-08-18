@@ -22,6 +22,7 @@ function App() {
 
   return (
     <div className="bg-dark-bg font-sans text-light-text min-h-screen">
+
       <main>
         <Hero />
         <MessageForm />

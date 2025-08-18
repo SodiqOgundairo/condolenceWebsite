@@ -61,13 +61,11 @@ const MessageForm: React.FC = () => {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-light-text focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="e.g., John Doe"
                 disabled={submitting}
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="message" className="block text-light-text font-bold mb-2">Your Message</label>
               <textarea
                 id="message"
                 rows={5}
@@ -115,6 +113,7 @@ const MessageForm: React.FC = () => {
           )}
           {error && (
             <div className="mt-4 text-center text-red-400 flex items-center justify-center">
+
               <FaExclamationCircle className="mr-2" /> {error}
             </div>
           )}
