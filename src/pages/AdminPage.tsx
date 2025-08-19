@@ -1,35 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import type { Session } from '@supabase/supabase-js';
+import { supabase } from '../lib/supabaseClient';
 import type { Message } from '../lib/database';
 import { FaSpinner } from 'react-icons/fa';
 
 const AdminPage: React.FC = () => {
+  const [session, setSession] = useState<Session | null>(null);
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleLogin = (e: React.FormEvent) => {
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session)
+    })
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === import.meta.env.VITE_ADMIN_PASSWORD) {
-      setIsAuthenticated(true);
-      setError('');
-    } else {
-      setError('Incorrect password. Please try again.');
+    setLoading(true);
+    setError('');
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+    } catch (err: any) {
+      setError(err.message || 'Failed to login.');
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (session) {
       const fetchMessages = async () => {
         setLoading(true);
         try {
+          const accessToken = session.access_token;
           const response = await fetch(
             `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-all-messages`,
             {
               headers: {
-                Authorization: `Bearer ${import.meta.env.VITE_MESSAGES_SECRET_KEY}`,
+                Authorization: `Bearer ${accessToken}`,
               },
             }
           );
@@ -48,52 +66,54 @@ const AdminPage: React.FC = () => {
       };
       fetchMessages();
     }
-  }, [isAuthenticated]);
+  }, [session]);
 
-  if (!isAuthenticated) {
+  if (!session) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-sm mx-auto">
-            <div className="bg-surface p-8 rounded-xl shadow-lg">
-            <h1 className="text-3xl font-display text-text-primary text-center mb-2">Admin Login</h1>
-            {/* <p className="text-center text-text-secondary mb-6">Welcome, Fe</p> */}
+          <div className="bg-surface p-8 rounded-xl shadow-lg">
+            <h1 className="text-3xl font-display text-text-primary text-center mb-6">Admin Login</h1>
             <form onSubmit={handleLogin}>
-                <div className="mb-4">
-                <label className="block text-text-secondary mb-2" htmlFor="username">
-                    Username
+              <div className="mb-4">
+                <label className="block text-text-secondary mb-2" htmlFor="email">
+                  Email
                 </label>
                 <input
-                    type="text"
-                    id="username"
-                    value="Fe"
-                    readOnly
-                    className="w-full px-4 py-2 border rounded-lg bg-accent border-accent text-text-secondary cursor-not-allowed"
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-2 border rounded-lg bg-background border-accent text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
                 />
-                </div>
-                <div className="mb-6">
+              </div>
+              <div className="mb-6">
                 <label className="block text-text-secondary mb-2" htmlFor="password">
-                    Password
+                  Password
                 </label>
                 <input
-                    type="password"
-                    id="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-4 py-2 border rounded-lg bg-background border-accent text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2 border rounded-lg bg-background border-accent text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
                 />
-                </div>
-                <button
+              </div>
+              <button
                 type="submit"
                 className="w-full bg-gray-600 text-white font-bold py-3 rounded-lg hover:bg-opacity-90 transition duration-300"
-                >
-                Login
-                </button>
-                {error && <p className="text-red-600 text-center mt-4">{error}</p>}
+                disabled={loading}
+              >
+                {loading ? <FaSpinner className="animate-spin mx-auto" /> : 'Login'}
+              </button>
+              {error && <p className="text-red-600 text-center mt-4">{error}</p>}
             </form>
-            </div>
-            <Link to="/" className="text-sm text-text-secondary hover:text-primary mt-4 block w-full text-center">
-                &larr; Back to main site
-            </Link>
+          </div>
+          <Link to="/" className="text-sm text-text-secondary hover:text-primary mt-4 block w-full text-center">
+            &larr; Back to main site
+          </Link>
         </div>
       </div>
     );
@@ -104,9 +124,12 @@ const AdminPage: React.FC = () => {
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-8">
             <h1 className="text-4xl font-display text-text-primary">All Messages</h1>
-            <Link to="/" className="text-sm text-primary hover:underline">
-                &larr; Back to main site
-            </Link>
+            <button
+                onClick={() => supabase.auth.signOut()}
+                className="text-sm text-primary hover:underline"
+            >
+                Logout
+            </button>
         </div>
 
         {loading ? (
