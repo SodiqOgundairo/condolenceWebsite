@@ -138,32 +138,45 @@ const AdminPage: React.FC = () => {
             <p className="mt-4 text-text-secondary">Loading messages...</p>
           </div>
         ) : (
-          <div className="bg-surface rounded-lg shadow-md">
-            <ul className="divide-y divide-accent">
-              {messages.map((msg) => (
-                <li key={msg.id} className="p-4 md:p-6">
-                  <div className="flex justify-between items-start">
-                    <div className='max-w-full'>
-                        {msg.message_type === 'voicenote' && msg.voicenote_url ? (
-                            <audio src={msg.voicenote_url} controls className="w-full" />
-                        ) : (
-                            <p className="text-text-secondary whitespace-pre-wrap break-words">{msg.message}</p>
-                        )}
-                        <p className="text-sm text-text-primary font-bold mt-2">- {msg.name}</p>
-                    </div>
-                    <span
-                      className={`ml-2 flex-shrink-0 px-3 py-1 text-xs font-semibold rounded-full ${
-                        msg.is_public
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-yellow-100 text-yellow-800'
-                      }`}
+          <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {messages.map((msg) => (
+                    <article
+                        key={msg.id}
+                        className="bg-surface border border-border rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 group relative"
                     >
-                      {msg.is_public ? 'Public' : 'Private'}
-                    </span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                        <div className="flex-grow">
+                            {msg.message_type === 'voicenote' && msg.voicenote_url ? (
+                                <div className="flex flex-col items-center">
+                                    <audio
+                                        controls
+                                        src={msg.voicenote_url}
+                                        className="w-full rounded-md border border-border"
+                                    />
+                                </div>
+                            ) : (
+                                <p className="text-text-primary text-base leading-relaxed whitespace-pre-wrap">
+                                    {msg.message}
+                                </p>
+                            )}
+                        </div>
+                        <div className="flex justify-between items-center mt-6">
+                            <p className="text-sm text-text-secondary font-medium">
+                                — {msg.name}
+                            </p>
+                            <span
+                                className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                                    msg.is_public
+                                    ? 'bg-green-100 text-green-800'
+                                    : 'bg-yellow-100 text-yellow-800'
+                                }`}
+                                >
+                                {msg.is_public ? 'Public' : 'Private'}
+                            </span>
+                        </div>
+                    </article>
+                ))}
+            </div>
           </div>
         )}
       </div>
