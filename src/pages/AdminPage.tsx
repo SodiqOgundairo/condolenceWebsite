@@ -144,7 +144,11 @@ const AdminPage: React.FC = () => {
                 <li key={msg.id} className="p-4 md:p-6">
                   <div className="flex justify-between items-start">
                     <div className='max-w-full'>
-                        <p className="text-text-secondary whitespace-pre-wrap break-words">{msg.message}</p>
+                        {msg.message_type === 'voicenote' && msg.voicenote_url ? (
+                            <audio src={msg.voicenote_url} controls className="w-full" />
+                        ) : (
+                            <p className="text-text-secondary whitespace-pre-wrap break-words">{msg.message}</p>
+                        )}
                         <p className="text-sm text-text-primary font-bold mt-2">- {msg.name}</p>
                     </div>
                     <span
