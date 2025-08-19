@@ -12,14 +12,24 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const authHeader = req.headers.get('Authorization')
-    if (authHeader !== `Bearer ${Deno.env.get('MESSAGES_SECRET_KEY')}`) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+    // Create a Supabase client with the user's authorization header
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      { global: { headers: { Authorization: req.headers.get('Authorization')! } } }
+    )
+
+    // Get the user from the session
+    const { data: { user } } = await supabaseClient.auth.getUser()
+    if (!user) {
+      return new Response(JSON.stringify({ error: 'Unauthorized: Invalid token' }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 401,
       })
     }
 
+    // If the user is authenticated, create an admin client to fetch all messages
+    // This bypasses RLS policies to allow an admin to see all messages
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
@@ -36,6 +46,7 @@ Deno.serve(async (req) => {
       status: 200,
     })
   } catch (err) {
+    console.error(err)
     return new Response(String(err?.message ?? err), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 500,
