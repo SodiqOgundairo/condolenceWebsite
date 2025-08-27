@@ -1,6 +1,7 @@
 import React from 'react';
 import MessageForm from '../components/MessageForm';
 import MessageList from '../components/MessageList';
+import GiftPagination from '../components/GiftPagination';
 
 const HomePage: React.FC = () => {
   return (
@@ -9,7 +10,11 @@ const HomePage: React.FC = () => {
           <MessageForm />
       </div>
       <MessageList />
+      <div>
+        <GiftPagination />
+      </div>
     </div>
+    
   );
 };
 
