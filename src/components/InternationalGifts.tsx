@@ -27,10 +27,6 @@ const InternationalGifts: React.FC = () => {
 
   const currencies = [
     { code: 'usd', symbol: '$', name: 'USD' },
-    { code: 'eur', symbol: '€', name: 'EUR' },
-    { code: 'gbp', symbol: '£', name: 'GBP' },
-    { code: 'cad', symbol: 'C$', name: 'CAD' },
-    { code: 'aud', symbol: 'A$', name: 'AUD' }
   ];
 
   const selectedCurrency = currencies.find(c => c.code === paymentData.currency) || currencies[0];
