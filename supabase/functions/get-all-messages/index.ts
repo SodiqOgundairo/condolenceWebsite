@@ -1,3 +1,6 @@
+// @ts-nocheck
+// This is a Deno (Supabase Edge Functions) file. Your Node/tsc setup may not understand Deno globals.
+// @ts-ignore: Deno supports remote imports, TypeScript may not find types
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const corsHeaders = {

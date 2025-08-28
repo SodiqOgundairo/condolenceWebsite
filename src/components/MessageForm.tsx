@@ -110,20 +110,9 @@ const MessageForm: React.FC = () => {
   };
 
   return (
-    <section className="py-16 bg-background flex flex-col md:flex-row justify-center gap-5 items-center px-10  md:px-20" data-aos="fade-up">
-      <header className="bg-surface mx-auto md:w-1/3" data-aos="fade-in">
-        <div className=" ">
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-text-primary text-gray-800">
-            In Loving Memory of a Dear Father
-          </h1>
-          <p className="text-lg text-text-secondary italic max-w-3xl mx-auto">
-            We gather here to celebrate a life well-lived and to share the memories that will forever be in our hearts. Your words of comfort and shared stories are a precious gift to our family during this time of loss.
-          </p>
-        </div>
-      </header>
-
-      <div className="container mx-auto md:w-3/6 shadow-2xs border border-gray-200 rounded-lg pt-8">
-        <h2 className="text-2xl font-display font-bold text-center text-text-primary mb-8">Share a Message</h2>
+    <section className="py-10" data-aos="fade-up">
+      <div className="mx-auto max-w-3xl bg-surface border border-border rounded-2xl shadow-sm p-6 md:p-8">
+        <h2 className="text-2xl font-display font-bold text-center text-text-primary mb-6">Share a Message</h2>
 
         <div className="flex justify-center mb-6">
           <div className="bg-surface gap-10 p-1 m-3 rounded-full flex bg-gray-200 container justify-center">
@@ -132,7 +121,7 @@ const MessageForm: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-surface p-6 rounded-lg shadow-lg">
+        <div className="bg-surface">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-text-secondary font-bold mb-2">Your Name</label>
@@ -141,7 +130,7 @@ const MessageForm: React.FC = () => {
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full p-3 bg-background border border-accent rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full p-3 bg-background border border-border rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
                 placeholder="e.g., Jane Smith"
                 disabled={submitting}
               />
@@ -155,7 +144,7 @@ const MessageForm: React.FC = () => {
                   rows={5}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full p-3 bg-background border border-accent rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full p-3 bg-background border border-border rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="Share a memory or a message of comfort..."
                   disabled={submitting}
                 ></textarea>
@@ -164,12 +153,12 @@ const MessageForm: React.FC = () => {
               <div className="mb-4 text-center">
                 <label className="block text-text-secondary font-bold mb-2">Record your voice note</label>
                 {recordingStatus === 'idle' && (
-                  <button type="button" onClick={startRecording} className="bg-red-600 text-white rounded-full p-4 hover:bg-red-700 transition">
+                  <button type="button" onClick={startRecording} className="bg-primary text-white rounded-full p-4 hover:brightness-110 transition">
                     <FaMicrophone size={24} />
                   </button>
                 )}
                 {recordingStatus === 'recording' && (
-                  <button type="button" onClick={stopRecording} className="bg-red-600 text-white rounded-full p-4 animate-pulse">
+                  <button type="button" onClick={stopRecording} className="bg-accent text-white rounded-full p-4 animate-pulse">
                     <FaStop size={24} />
                   </button>
                 )}
@@ -198,7 +187,7 @@ const MessageForm: React.FC = () => {
                   type="button"
                   onClick={() => setIsPublic(!isPublic)}
                   className={`${
-                    isPublic ? 'bg-gray-900' : 'bg-gray-300'
+                    isPublic ? 'bg-primary' : 'bg-secondary'
                   } relative inline-flex h-6 w-11 items-center rounded-full transition-colors`}
 
                   disabled={submitting}
@@ -206,7 +195,7 @@ const MessageForm: React.FC = () => {
                   <span
                     className={`${
                       isPublic ? 'translate-x-6' : 'translate-x-1'
-                    } inline-block h-4 w-4 transform rounded-full bg-gray-600 transition-transform`}
+                    } inline-block h-4 w-4 transform rounded-full bg-surface ring-1 ring-border transition-transform`}
                   />
                 </button>
               </div>
@@ -214,7 +203,7 @@ const MessageForm: React.FC = () => {
             <div className="text-center">
               <button
                 type="submit"
-                className="bg-gray-400 text-black font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition duration-300 flex items-center justify-center w-full disabled:bg-gray-400"
+                className="bg-primary text-white font-bold py-3 px-8 rounded-full hover:brightness-110 transition duration-300 flex items-center justify-center w-full disabled:opacity-60"
                 disabled={submitting}
               >
                 {submitting ? (

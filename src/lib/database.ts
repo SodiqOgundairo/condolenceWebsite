@@ -11,6 +11,10 @@ export interface Message {
 }
 
 export const getPublicMessages = async (): Promise<Message[]> => {
+  if (!supabase) {
+    console.error('Supabase not configured. Check VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+    return [];
+  }
   const { data, error } = await supabase
     .from('messages')
     .select('*')
@@ -27,6 +31,9 @@ export const getPublicMessages = async (): Promise<Message[]> => {
 
 export const uploadVoiceNote = async (voiceNote: Blob, userName: string): Promise<string | null> => {
   try {
+    if (!supabase) {
+      throw new Error('Supabase not configured.');
+    }
     const fileName = `${userName.replace(/\s+/g, '_')}_${Date.now()}.webm`;
     const { data, error } = await supabase.storage
       .from('voicenotes')
@@ -51,6 +58,10 @@ export const uploadVoiceNote = async (voiceNote: Blob, userName: string): Promis
 };
 
 export const addMessage = async (message: Omit<Message, 'id' | 'created_at'>): Promise<boolean> => {
+  if (!supabase) {
+    console.error('Supabase not configured.');
+    return false;
+  }
   const { error } = await supabase
     .from('messages')
     .insert([message]);

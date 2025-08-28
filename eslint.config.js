@@ -6,7 +6,8 @@ import tseslint from 'typescript-eslint'
 import { globalIgnores } from 'eslint/config'
 
 export default tseslint.config([
-  globalIgnores(['dist']),
+  // Ignore dist and Supabase (Deno) functions to avoid Node/ESLint conflicts
+  globalIgnores(['dist', 'supabase/**']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

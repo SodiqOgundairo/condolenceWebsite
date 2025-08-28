@@ -14,11 +14,15 @@ const AdminPage: React.FC = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    if (!supabase) {
+      setError('Supabase is not configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+      return;
+    }
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
     supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session)
+      setSession(session)
     })
     return () => subscription.unsubscribe();
   }, []);
@@ -28,6 +32,9 @@ const AdminPage: React.FC = () => {
     setLoading(true);
     setError('');
     try {
+      if (!supabase) {
+        throw new Error('Supabase is not configured. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+      }
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
     } catch (err: any) {
@@ -74,6 +81,11 @@ const AdminPage: React.FC = () => {
         <div className="w-full max-w-sm mx-auto">
           <div className="bg-surface p-8 rounded-xl shadow-lg">
             <h1 className="text-3xl font-display text-text-primary text-center mb-6">Admin Login</h1>
+            {!supabase && (
+              <p className="text-red-600 text-center mb-4">
+                Supabase not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your .env file.
+              </p>
+            )}
             <form onSubmit={handleLogin}>
               <div className="mb-4">
                 <label className="block text-text-secondary mb-2" htmlFor="email">
@@ -125,7 +137,7 @@ const AdminPage: React.FC = () => {
         <div className="flex justify-between items-center mb-8">
             <h1 className="text-4xl font-display text-text-primary">All Messages</h1>
             <button
-                onClick={() => supabase.auth.signOut()}
+                onClick={() => supabase && supabase.auth.signOut()}
                 className="text-sm text-primary hover:underline"
             >
                 Logout
