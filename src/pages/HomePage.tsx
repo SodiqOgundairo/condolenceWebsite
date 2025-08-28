@@ -13,6 +13,8 @@ const HomePage: React.FC = () => {
         <MessageForm />
       </div>
       <MessageList />
+      <GiftPagination />
+      <Footer />
     </div>
     
   );
