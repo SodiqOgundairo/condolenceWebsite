@@ -43,7 +43,7 @@ const CondolenceGifts: React.FC = () => {
     
     try {
       await paystack.newTransaction({
-        key: process.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_your_public_key_here', // Add to .env
+        key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_your_public_key_here', // Add to .env
         amount: paymentData.amount,
         email: paymentData.email,
         firstname: paymentData.isAnonymous ? 'Anonymous' : paymentData.firstName,
@@ -88,32 +88,32 @@ const CondolenceGifts: React.FC = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded border border-gray-200 p-6 my-8">
+    <div className="max-w-md mx-auto bg-surface rounded-2xl border border-border p-6 my-8 shadow-sm">
 
        {/* Bank Transfer Details */}
-      <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded">
-        <h3 className="text-sm font-medium text-gray-800 mb-2">Bank Transfer Details</h3>
-        <div className="space-y-1 text-sm text-gray-700">
-          <div><span className="font-medium">Account Name:</span> Erane Gemade</div>
-          <div><span className="font-medium">Account Number:</span> 6321484865</div>
-          <div><span className="font-medium">Bank:</span> Fidelity Bank</div>
+      <div className="mb-6 p-4 bg-secondary/60 border border-border rounded-xl">
+        <h3 className="text-sm font-medium text-text-primary mb-2">Bank Transfer Details</h3>
+        <div className="space-y-1 text-sm text-text-secondary">
+          <div><span className="font-medium text-text-primary">Account Name:</span> Erane Gemade</div>
+          <div><span className="font-medium text-text-primary">Account Number:</span> 6321484865</div>
+          <div><span className="font-medium text-text-primary">Bank:</span> Fidelity Bank</div>
         </div>
       </div>
 
       {/* OR Divider */}
       <div className="flex items-center mb-6">
-        <hr className="flex-1 border-gray-300" />
-        <span className="px-3 text-sm text-gray-500 font-medium">OR</span>
-        <hr className="flex-1 border-gray-300" />
+        <hr className="flex-1 border-border" />
+        <span className="px-3 text-sm text-text-secondary font-medium">OR</span>
+        <hr className="flex-1 border-border" />
       </div>
       {/* Amount Selection */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-1">Gift Amount (₦)</label>
+        <label className="block text-sm font-medium text-text-secondary mb-1">Gift Amount (₦)</label>
         <input
           type="number"
           name="customAmount"
           placeholder="Enter amount"
-          className="w-full p-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+          className="w-full p-2 bg-background border border-border rounded text-sm text-text-primary placeholder:text-text-secondary/70 focus:ring-2 focus:ring-primary/40 focus:border-transparent"
           onChange={handleInputChange}
           min="100"
         />
@@ -127,9 +127,9 @@ const CondolenceGifts: React.FC = () => {
             name="isAnonymous"
             checked={paymentData.isAnonymous}
             onChange={handleInputChange}
-            className="mr-2 h-4 w-4 text-gray-600 focus:ring-gray-400 border-gray-300 rounded"
+            className="mr-2 h-4 w-4 text-primary focus:ring-primary/40 border-border rounded"
           />
-          <span className="text-sm text-gray-700">Send this gift anonymously</span>
+          <span className="text-sm text-text-secondary">Send this gift anonymously</span>
         </label>
       </div>
 
@@ -138,24 +138,24 @@ const CondolenceGifts: React.FC = () => {
         {!paymentData.isAnonymous && (
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">First Name *</label>
               <input
                 type="text"
                 name="firstName"
                 value={paymentData.firstName}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+                className="w-full p-2 bg-background border border-border rounded text-sm focus:ring-2 focus:ring-primary/40 focus:border-transparent"
                 required={!paymentData.isAnonymous}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Last Name *</label>
               <input
                 type="text"
                 name="lastName"
                 value={paymentData.lastName}
                 onChange={handleInputChange}
-                className="w-full p-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+                className="w-full p-2 bg-background border border-border rounded text-sm focus:ring-2 focus:ring-primary/40 focus:border-transparent"
                 required={!paymentData.isAnonymous}
               />
             </div>
@@ -163,35 +163,35 @@ const CondolenceGifts: React.FC = () => {
         )}
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+          <label className="block text-sm font-medium text-text-secondary mb-1">Email Address *</label>
           <input
             type="email"
             name="email"
             value={paymentData.email}
             onChange={handleInputChange}
-            className="w-full p-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+            className="w-full p-2 bg-background border border-border rounded text-sm focus:ring-2 focus:ring-primary/40 focus:border-transparent"
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Personal Message (Optional)</label>
+          <label className="block text-sm font-medium text-text-secondary mb-1">Personal Message (Optional)</label>
           <textarea
             name="message"
             value={paymentData.message}
             onChange={handleInputChange}
             rows={3}
-            className="w-full p-2 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-gray-400 focus:border-transparent resize-none"
+            className="w-full p-2 bg-background border border-border rounded text-sm focus:ring-2 focus:ring-primary/40 focus:border-transparent resize-none"
             placeholder="Share your thoughts or memories..."
           />
         </div>
       </div>
 
       {/* Payment Summary */}
-      <div className="bg-gray-50 rounded p-3 mb-4">
+      <div className="bg-secondary/50 rounded p-3 mb-4 border border-border">
         <div className="flex justify-between items-center text-sm">
-          <span className="text-gray-600">Total Amount:</span>
-          <span className="font-medium text-gray-800">₦{(paymentData.amount / 100).toLocaleString()}</span>
+          <span className="text-text-secondary">Total Amount:</span>
+          <span className="font-medium text-text-primary">₦{(paymentData.amount / 100).toLocaleString()}</span>
         </div>
       </div>
 
@@ -199,7 +199,7 @@ const CondolenceGifts: React.FC = () => {
       <button
         onClick={handlePayment}
         disabled={isLoading || !paymentData.email || (!paymentData.isAnonymous && (!paymentData.firstName || !paymentData.lastName)) || !paymentData.amount || paymentData.amount < 10000}
-        className="w-full bg-gray-600 text-white py-3 px-4 rounded font-medium text-sm hover:bg-gray-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+        className="w-full bg-primary text-white py-3 px-4 rounded-full font-medium text-sm hover:brightness-110 disabled:opacity-60 disabled:cursor-not-allowed transition"
       >
         {isLoading ? 'Processing...' : 
          paymentData.amount && paymentData.amount >= 10000 ? 
@@ -207,7 +207,7 @@ const CondolenceGifts: React.FC = () => {
          'Enter Gift Amount'}
       </button>
 
-      <p className="text-xs text-gray-500 text-center mt-2">
+      <p className="text-xs text-text-secondary text-center mt-2">
         Secured by Paystack
       </p>
     </div>

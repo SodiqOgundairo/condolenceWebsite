@@ -19,24 +19,24 @@ const GiftPagination: React.FC = () => {
   ];
 
   return (
-    <div className="w-full">
+    <section className="w-full" aria-label="Condolence gifts">
       {/* Main Header */}
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-2">Send a Condolence Gift</h2>
-        <p className="text-gray-600">Thank you.</p>
+        <h2 className="text-3xl font-display font-bold text-text-primary mb-2">Send a Condolence Gift</h2>
+        <p className="text-text-secondary">Thank you for your kindness and support.</p>
       </div>
 
       {/* Tab Navigation */}
       <div className="flex justify-center mb-6">
-        <div className="bg-gray-100 rounded-lg p-1 inline-flex">
+        <div className="bg-secondary rounded-lg p-1 inline-flex border border-border">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                 activeTab === tab.id
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-surface text-text-primary shadow-sm border border-border'
+                  : 'text-text-secondary hover:text-text-primary'
               }`}
             >
               {tab.label}
@@ -60,7 +60,7 @@ const GiftPagination: React.FC = () => {
           <InternationalGifts />
         )}
       </div>
-    </div>
+    </section>
   );
 };
 
