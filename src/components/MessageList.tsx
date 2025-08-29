@@ -57,7 +57,6 @@ const MessageList: React.FC = () => {
         <h2 className="text-3xl font-display font-bold text-center text-text-primary mb-12">
           Messages of Comfort
         </h2>
-        
         {messages.length === 0 ? (
           <p className="text-center text-text-secondary">
             Be the first to share a message.
