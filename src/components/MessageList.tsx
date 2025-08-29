@@ -7,7 +7,8 @@ const MessageList: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const messagesPerPage = 6;
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const messagesPerPage = 3;
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -52,7 +53,7 @@ const MessageList: React.FC = () => {
   }
 
   return (
-    <section className="py-16 mx-auto" data-aos="fade-up">
+    <section id="messages" className="py-16 mx-auto">
       <div className="container mx-auto px-4 max-w-6xl">
         <h2 className="text-3xl font-display font-bold text-center text-text-primary mb-12">
           Messages of Comfort
@@ -64,12 +65,11 @@ const MessageList: React.FC = () => {
         ) : (
           <>
             {/* Messages Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {currentMessages.map((msg) => (
                 <article
                   key={msg.id}
-                  className="bg-surface border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 group"
-                  data-aos="fade-up"
+                  className="bg-surface border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition"
                 >
                   {msg.message_type === 'voicenote' && msg.voicenote_url ? (
                     <div className="flex flex-col items-center">
@@ -83,9 +83,26 @@ const MessageList: React.FC = () => {
                       </p>
                     </div>
                   ) : (
-                    <p className="text-text-primary text-base leading-relaxed whitespace-pre-wrap">
-                      {msg.message}
-                    </p>
+                    <div>
+                      <p className="text-text-primary text-base leading-relaxed whitespace-pre-wrap">
+                        {(() => {
+                          const full = msg.message || '';
+                          const isOpen = !!expanded[msg.id ?? ''];
+                          const limit = 220;
+                          const truncated = full.length > limit ? full.slice(0, limit).trimEnd() + '…' : full;
+                          return isOpen ? full : truncated;
+                        })()}
+                      </p>
+                      {(msg.message?.length ?? 0) > 220 && (
+                        <button
+                          type="button"
+                          onClick={() => setExpanded((s) => ({ ...s, [msg.id!]: !s[msg.id!] }))}
+                          className="mt-3 text-sm text-primary hover:underline"
+                        >
+                          {expanded[msg.id ?? ''] ? 'Show less' : 'Read more'}
+                        </button>
+                      )}
+                    </div>
                   )}
                   <p className="text-right text-sm text-text-secondary mt-6 font-medium">
                     — {msg.name}
@@ -96,15 +113,15 @@ const MessageList: React.FC = () => {
 
             {/* Pagination Controls */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-center space-x-4">
+              <div className="flex items-center justify-center gap-3">
                 {/* Previous Button */}
                 <button
                   onClick={goToPrevPage}
                   disabled={currentPage === 1}
-                  className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`flex items-center px-3 py-2 rounded-full text-sm font-medium transition-colors border border-border ${
                     currentPage === 1
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      ? 'text-text-secondary/60 cursor-not-allowed'
+                      : 'text-text-secondary hover:bg-secondary'
                   }`}
                 >
                   <FaChevronLeft className="w-3 h-3 mr-1" />
@@ -112,18 +129,16 @@ const MessageList: React.FC = () => {
                 </button>
 
                 {/* Page Numbers */}
-                <div className="flex space-x-1">
+                <div className="flex gap-2">
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
                     <button
                       key={pageNum}
                       onClick={() => goToPage(pageNum)}
-                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        currentPage === pageNum
-                          ? 'bg-gray-800 text-white'
-                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      className={`h-2 w-2 rounded-full transition-colors ${
+                        currentPage === pageNum ? 'bg-primary' : 'bg-border hover:bg-text-secondary/40'
                       }`}
                     >
-                      {pageNum}
+                      <span className="sr-only">Go to page {pageNum}</span>
                     </button>
                   ))}
                 </div>
@@ -132,10 +147,10 @@ const MessageList: React.FC = () => {
                 <button
                   onClick={goToNextPage}
                   disabled={currentPage === totalPages}
-                  className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`flex items-center px-3 py-2 rounded-full text-sm font-medium transition-colors border border-border ${
                     currentPage === totalPages
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      ? 'text-text-secondary/60 cursor-not-allowed'
+                      : 'text-text-secondary hover:bg-secondary'
                   }`}
                 >
                   Next
