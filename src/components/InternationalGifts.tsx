@@ -12,6 +12,7 @@ interface PaymentData {
 }
 
 // const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_your_stripe_publishable_key_here');
+const PAYPAL_LINK = 'https://www.paypal.com/qrcodes/p2pqrc/VQPSDKMCJA6V2';
 
 const InternationalGifts: React.FC = () => {
   const [paymentData, setPaymentData] = useState<PaymentData>({
@@ -24,6 +25,7 @@ const InternationalGifts: React.FC = () => {
     isAnonymous: false
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [method, setMethod] = useState<'paypal' | 'bank_gbp' | 'wise' | 'card'>('paypal');
 
   const currencies = [
     { code: 'usd', symbol: '$', name: 'USD' },
@@ -42,6 +44,10 @@ const InternationalGifts: React.FC = () => {
   };
 
   const handlePayment = async () => {
+    if (method === 'paypal') {
+      window.open(PAYPAL_LINK, '_blank', 'noopener,noreferrer');
+      return;
+    }
     if (!paymentData.email || (!paymentData.isAnonymous && (!paymentData.firstName || !paymentData.lastName)) || !paymentData.amount || paymentData.amount < 100) {
       alert('Please fill in all required fields and enter a minimum amount of $1.00');
       return;
@@ -81,8 +87,100 @@ const InternationalGifts: React.FC = () => {
     }
   };
 
+  const copy = async (text: string) => {
+    try { await navigator.clipboard.writeText(text); alert('Copied to clipboard'); } catch {}
+  };
+
   return (
     <div className="max-w-md mx-auto bg-surface rounded-2xl border border-border p-6 my-8 shadow-sm">
+      {/* Method Selection */}
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-text-secondary mb-1">Method</label>
+        <select
+          name="method"
+          value={method}
+          onChange={(e) => {
+            const val = (e.target as HTMLSelectElement).value as 'paypal' | 'bank_gbp' | 'wise' | 'card';
+            setMethod(val);
+          }}
+          className="w-full p-2 bg-background border border-border rounded text-sm focus:ring-2 focus:ring-primary/40 focus:border-transparent"
+          aria-label="Select payment method"
+        >
+          <option value="paypal">PayPal</option>
+          <option value="bank_gbp">Bank Transfer (GBP)</option>
+          <option value="wise">Wise (coming soon)</option>
+          <option value="card" disabled>Card (USD) — coming soon</option>
+        </select>
+      </div>
+
+      {method === 'paypal' ? (
+        <div className="space-y-4">
+          <div className="p-4 rounded-xl bg-secondary/60 border border-border">
+            <p className="text-sm text-text-secondary">
+              Give securely via PayPal. You’ll be redirected to PayPal.
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <img src="/paypal_qrcode.jpeg" alt="PayPal QR code" className="rounded-md border border-border w-40 h-40 object-contain bg-white" />
+          </div>
+          <button
+            type="button"
+            onClick={() => window.open(PAYPAL_LINK, '_blank', 'noopener,noreferrer')}
+            className="w-full inline-flex items-center justify-center bg-primary text-white py-3 px-4 rounded-full font-medium text-sm hover:brightness-110 transition"
+          >
+            Continue with PayPal
+          </button>
+        </div>
+      ) : method === 'bank_gbp' ? (
+        <div className="space-y-4">
+          <div className="p-4 rounded-xl bg-secondary/60 border border-border space-y-2">
+            <h4 className="font-semibold text-text-primary">UK Bank Transfer (GBP)</h4>
+            <div className="grid grid-cols-1 gap-3 text-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-text-secondary">Account Name</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-text-primary">Mamfe-ter Gemade</span>
+                  <button onClick={() => copy('Mamfe-ter Gemade')} className="text-xs text-primary hover:underline">Copy</button>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-text-secondary">Bank</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-text-primary">Barclays</span>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-text-secondary">Sort Code</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-text-primary">20-89-16</span>
+                  <button onClick={() => copy('20-89-16')} className="text-xs text-primary hover:underline">Copy</button>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-text-secondary">Account Number</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-text-primary">63452751</span>
+                  <button onClick={() => copy('63452751')} className="text-xs text-primary hover:underline">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="text-xs text-text-secondary text-center">Please use your name as the payment reference if possible.</p>
+        </div>
+      ) : method === 'wise' ? (
+        <div className="space-y-4">
+          <div className="p-4 rounded-xl bg-secondary/60 border border-border">
+            <p className="text-sm text-text-secondary">
+              Wise option is coming soon. In the meantime, please use the PayPal button above or the UK bank details.
+            </p>
+          </div>
+          <div className="flex items-center justify-center gap-3">
+            <button type="button" onClick={() => setMethod('paypal')} className="px-4 py-2 rounded-full border border-border text-text-primary bg-surface hover:bg-secondary transition">Use PayPal</button>
+            <button type="button" onClick={() => setMethod('bank_gbp')} className="px-4 py-2 rounded-full border border-border text-text-primary bg-surface hover:bg-secondary transition">Use UK Bank</button>
+          </div>
+        </div>
+      ) : (
+        <>
       {/* Currency Selection */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-text-secondary mb-1">Currency</label>
@@ -209,6 +307,8 @@ const InternationalGifts: React.FC = () => {
       <p className="text-xs text-text-secondary text-center mt-2">
         Secured by Stripe
       </p>
+      </>
+      )}
     </div>
   );
 };

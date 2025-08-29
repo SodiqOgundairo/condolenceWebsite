@@ -1,4 +1,71 @@
 import React from 'react';
+import BiographyText from '../assets/biography.txt?raw';
+
+const renderBiography = (text: string) => {
+  const headers = new Set([
+    'Early Life and Education',
+    'Professional Career',
+    'Academic and Professional Achievements',
+    'Personal Life',
+  ]);
+
+  const lines = text.split(/\r?\n/);
+  const out: React.ReactNode[] = [];
+  let i = 0;
+
+  // Optional: make the very first line (title) stand out if present
+  if (lines.length && /^Biography of/i.test(lines[0])) {
+    out.push(
+      <h4 key="title" className="text-lg font-semibold text-text-primary">
+        {lines[0]}
+      </h4>
+    );
+    i = 1;
+  }
+
+  while (i < lines.length) {
+    const raw = lines[i];
+    const line = raw.trim();
+    if (!line) { i++; continue; }
+
+    // Sub headers
+    if (headers.has(line)) {
+      out.push(
+        <p key={`h-${i}`} className="mt-6 font-semibold text-text-primary">
+          {line}
+        </p>
+      );
+      i++; continue;
+    }
+
+    // Bulleted lists
+    if (line.startsWith('* ')) {
+      const items: string[] = [];
+      while (i < lines.length && lines[i].trim().startsWith('* ')) {
+        items.push(lines[i].trim().replace(/^\*+\s*/, ''));
+        i++;
+      }
+      out.push(
+        <ul key={`ul-${i}`} className="list-disc pl-5 text-text-secondary space-y-1">
+          {items.map((it, idx) => (
+            <li key={idx}>{it}</li>
+          ))}
+        </ul>
+      );
+      continue;
+    }
+
+    // Regular paragraph
+    out.push(
+      <p key={`p-${i}`} className="text-text-secondary">
+        {raw}
+      </p>
+    );
+    i++;
+  }
+
+  return out;
+};
 
 interface BiographyModalProps {
   open: boolean;
@@ -26,16 +93,8 @@ const BiographyModal: React.FC<BiographyModalProps> = ({ open, onClose }) => {
             Close
           </button>
         </div>
-        <div className="mt-4 space-y-4 text-sm leading-7 text-text-secondary">
-          <p><strong className="text-text-primary">Arc (Dr) Terver Gemade</strong> (1957 – 2025) was a distinguished architect, administrator, and devoted Christian whose career spanned over three decades across both private and public service.</p>
-
-          <p><strong className="text-text-primary">Early Life & Education:</strong> He began school at Demonstration School, Mkar (1963) and completed his WASC at Boys Secondary School, Gindiri (1977). He earned a B.Sc. (Architecture, Second Class Upper) and an M.Sc. (Distinction) from Ahmadu Bello University, Zaria, later receiving an Honorary Doctorate and completing a PhD in Environmental Resource Management.</p>
-
-          <p><strong className="text-text-primary">Professional Journey:</strong> From 1983–1999 he worked in private practice, rising to Managing Director. From 1999–2014, he served the Federal Housing Authority, culminating as Managing Director/Chief Executive. Under his leadership, FHA delivered transformative housing projects including the Gwarinpa Housing Estate (Abuja), the largest in Sub‑Saharan Africa, as well as major developments in Guzape, Lugbe, Kado and initiatives across Lagos, Port‑Harcourt, Owerri, Calabar, Kaduna, Gombe and Kano. He also established an extensive national land bank to support future projects.</p>
-
-          <p><strong className="text-text-primary">Professional Recognition:</strong> He was a fellow/member of several bodies including ARCON, NIA (FNIA), NIM (FNIM), NIMN (FNIMN), FABS, IFMA, CIH (UK), FEBI, FCIM and FMP, and received numerous awards for leadership, innovation and service to humanity.</p>
-
-          <p><strong className="text-text-primary">Personal Life:</strong> A devoted family man, he was blessed with children and enjoyed music, travel and games. His faith, integrity and service continue to inspire those whose lives he touched.</p>
+        <div className="mt-4 text-sm leading-7">
+          {renderBiography(BiographyText)}
         </div>
       </div>
     </div>
@@ -43,4 +102,3 @@ const BiographyModal: React.FC<BiographyModalProps> = ({ open, onClose }) => {
 }
 
 export default BiographyModal;
-

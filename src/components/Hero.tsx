@@ -13,7 +13,7 @@ const Hero: React.FC<Props> = ({ onOpenBiography, onGoToGifts }) => {
         <div className="mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div>
             <h1 className="text-4xl md:text-6xl font-display leading-tight text-text-primary">
-              In Loving Memory
+              In Loving Memory of Arc (Dr) Terver Gemade
             </h1>
             <p className="mt-4 text-lg text-text-secondary">
               We celebrate a life well lived and cherish the stories that continue
