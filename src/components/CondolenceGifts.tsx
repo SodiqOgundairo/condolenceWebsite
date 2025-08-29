@@ -89,6 +89,23 @@ const CondolenceGifts: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto bg-white rounded border border-gray-200 p-6 my-8">
+
+       {/* Bank Transfer Details */}
+      <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded">
+        <h3 className="text-sm font-medium text-gray-800 mb-2">Bank Transfer Details</h3>
+        <div className="space-y-1 text-sm text-gray-700">
+          <div><span className="font-medium">Account Name:</span> Erane Gemade</div>
+          <div><span className="font-medium">Account Number:</span> 6321484865</div>
+          <div><span className="font-medium">Bank:</span> Fidelity Bank</div>
+        </div>
+      </div>
+
+      {/* OR Divider */}
+      <div className="flex items-center mb-6">
+        <hr className="flex-1 border-gray-300" />
+        <span className="px-3 text-sm text-gray-500 font-medium">OR</span>
+        <hr className="flex-1 border-gray-300" />
+      </div>
       {/* Amount Selection */}
       <div className="mb-6">
         <label className="block text-sm font-medium text-gray-700 mb-1">Gift Amount (₦)</label>
