@@ -3,9 +3,10 @@ import React from 'react';
 type Props = {
   onOpenBiography?: () => void;
   onGoToGifts?: () => void;
+  onOpenBurial?: () => void;
 }
 
-const Hero: React.FC<Props> = ({ onOpenBiography, onGoToGifts }) => {
+const Hero: React.FC<Props> = ({ onOpenBiography, onGoToGifts, onOpenBurial }) => {
   return (
     <header className="relative isolate overflow-hidden" data-aos="fade-in">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-surface to-background" />
@@ -31,6 +32,13 @@ const Hero: React.FC<Props> = ({ onOpenBiography, onGoToGifts }) => {
                 className="px-4 py-2 rounded-full border border-border text-text-primary bg-surface hover:bg-secondary transition"
               >
                 Read Biography
+              </button>
+              <button
+                type="button"
+                onClick={onOpenBurial}
+                className="px-4 py-2 rounded-full border border-border text-text-primary bg-surface hover:bg-secondary transition"
+              >
+                Burial Details
               </button>
               <button
                 type="button"

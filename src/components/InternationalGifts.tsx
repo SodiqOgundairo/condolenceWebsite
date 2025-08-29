@@ -13,6 +13,7 @@ interface PaymentData {
 
 // const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_your_stripe_publishable_key_here');
 const PAYPAL_LINK = 'https://www.paypal.com/qrcodes/p2pqrc/VQPSDKMCJA6V2';
+const WISE_LINK = 'https://wise.com/pay/me/sefag95';
 
 const InternationalGifts: React.FC = () => {
   const [paymentData, setPaymentData] = useState<PaymentData>({
@@ -46,6 +47,10 @@ const InternationalGifts: React.FC = () => {
   const handlePayment = async () => {
     if (method === 'paypal') {
       window.open(PAYPAL_LINK, '_blank', 'noopener,noreferrer');
+      return;
+    }
+    if (method === 'wise') {
+      window.open(WISE_LINK, '_blank', 'noopener,noreferrer');
       return;
     }
     if (!paymentData.email || (!paymentData.isAnonymous && (!paymentData.firstName || !paymentData.lastName)) || !paymentData.amount || paymentData.amount < 100) {
@@ -108,7 +113,7 @@ const InternationalGifts: React.FC = () => {
         >
           <option value="paypal">PayPal</option>
           <option value="bank_gbp">Bank Transfer (GBP)</option>
-          <option value="wise">Wise (coming soon)</option>
+          <option value="wise">Wise</option>
           <option value="card" disabled>Card (USD) — coming soon</option>
         </select>
       </div>
@@ -171,13 +176,19 @@ const InternationalGifts: React.FC = () => {
         <div className="space-y-4">
           <div className="p-4 rounded-xl bg-secondary/60 border border-border">
             <p className="text-sm text-text-secondary">
-              Wise option is coming soon. In the meantime, please use the PayPal button above or the UK bank details.
+              Give via Wise. Scan the QR code or open the link below.
             </p>
           </div>
-          <div className="flex items-center justify-center gap-3">
-            <button type="button" onClick={() => setMethod('paypal')} className="px-4 py-2 rounded-full border border-border text-text-primary bg-surface hover:bg-secondary transition">Use PayPal</button>
-            <button type="button" onClick={() => setMethod('bank_gbp')} className="px-4 py-2 rounded-full border border-border text-text-primary bg-surface hover:bg-secondary transition">Use UK Bank</button>
+          <div className="flex justify-center">
+            <img src="/wise_qrcode.png" alt="Wise QR code" className="rounded-md border border-border w-40 h-40 object-contain bg-white" />
           </div>
+          <button
+            type="button"
+            onClick={() => window.open(WISE_LINK, '_blank', 'noopener,noreferrer')}
+            className="w-full inline-flex items-center justify-center bg-primary text-white py-3 px-4 rounded-full font-medium text-sm hover:brightness-110 transition"
+          >
+            Continue with Wise
+          </button>
         </div>
       ) : (
         <>
