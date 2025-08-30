@@ -20,6 +20,9 @@ const CondolenceGifts: React.FC = () => {
     isAnonymous: false
   });
   const [isLoading, setIsLoading] = useState(false);
+  const copy = async (text: string) => {
+    try { await navigator.clipboard.writeText(text); alert('Copied to clipboard'); } catch {}
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -92,11 +95,28 @@ const CondolenceGifts: React.FC = () => {
 
        {/* Bank Transfer Details */}
       <div className="mb-6 p-4 bg-secondary/60 border border-border rounded-xl">
-        <h3 className="text-sm font-medium text-text-primary mb-2">Bank Transfer Details</h3>
-        <div className="space-y-1 text-sm text-text-secondary">
-          <div><span className="font-medium text-text-primary">Account Name:</span> Erane Gemade</div>
-          <div><span className="font-medium text-text-primary">Account Number:</span> 6321484865</div>
-          <div><span className="font-medium text-text-primary">Bank:</span> Fidelity Bank</div>
+        <h3 className="text-sm font-medium text-text-primary mb-2">Bank Transfer (NGN)</h3>
+        <div className="grid grid-cols-1 gap-3 text-sm text-text-secondary">
+          <div className="flex items-center justify-between">
+            <span className="font-medium text-text-primary">Account Name:</span>
+            <div className="flex items-center gap-2">
+              <span>Erane Gemade</span>
+              <button onClick={() => copy('Erane Gemade')} className="text-xs text-primary hover:underline">Copy</button>
+            </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="font-medium text-text-primary">Account Number:</span>
+            <div className="flex items-center gap-2">
+              <span>6321484865</span>
+              <button onClick={() => copy('6321484865')} className="text-xs text-primary hover:underline">Copy</button>
+            </div>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="font-medium text-text-primary">Bank:</span>
+            <div className="flex items-center gap-2">
+              <span>Fidelity Bank</span>
+            </div>
+          </div>
         </div>
       </div>
 
