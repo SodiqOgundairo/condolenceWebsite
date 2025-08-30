@@ -17,7 +17,7 @@ const Hero: React.FC<Props> = ({ onOpenBiography, onGoToGifts, onOpenBurial }) =
               In Loving Memory of Arc (Dr) Terver Gemade
             </h1>
             <p className="mt-4 text-lg text-text-secondary">
-              We celebrate a life well lived and cherish the stories that continue
+              We celebrate a life well-lived and cherish the stories that continue
               to warm our hearts. Arc (Dr) Terver Gemade (1957–2025) was a distinguished
               architect and public servant whose work shaped communities across Nigeria.
             </p>

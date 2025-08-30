@@ -47,7 +47,7 @@ const BurialDetailsModal: React.FC<Props> = ({ open, onClose }) => {
           </section>
 
           <section>
-            <h4 className="font-semibold text-text-primary">13th September 2025 — Thanksgiving Service</h4>
+            <h4 className="font-semibold text-text-primary">14th September 2025 — Thanksgiving Service</h4>
             <ul className="list-disc pl-5 text-text-secondary mt-2 space-y-1">
               <li>9:00am at NKST Konshisha Church, Family residence, Konshisha, Benue State</li>
             </ul>
