@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
             href="mailto:contact@tervergemade.life"
             className="text-primary hover:underline font-medium"
           >
-            cont@tervergemade.life
+            contact@tervergemade.life
           </a>
         </p>
         <p className="text-xs text-text-secondary">&copy; {new Date().getFullYear()} In loving memory. All rights reserved.</p>
