@@ -26,7 +26,7 @@ const InternationalGifts: React.FC = () => {
     isAnonymous: false
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [method, setMethod] = useState<'paypal' | 'bank_gbp' | 'wise' | 'card'>('paypal');
+  const [method, setMethod] = useState<'paypal' | 'bank_gbp' | 'wise' | 'card'>('bank_gbp');
 
   const currencies = [
     { code: 'usd', symbol: '$', name: 'USD' },
@@ -98,24 +98,27 @@ const InternationalGifts: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto bg-surface rounded-2xl border border-border p-6 my-8 shadow-sm">
-      {/* Method Selection */}
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-text-secondary mb-1">Method</label>
-        <select
-          name="method"
-          value={method}
-          onChange={(e) => {
-            const val = (e.target as HTMLSelectElement).value as 'paypal' | 'bank_gbp' | 'wise' | 'card';
-            setMethod(val);
-          }}
-          className="w-full p-2 bg-background border border-border rounded text-sm focus:ring-2 focus:ring-primary/40 focus:border-transparent"
-          aria-label="Select payment method"
-        >
-          <option value="paypal">PayPal</option>
-          <option value="bank_gbp">Bank Transfer (GBP)</option>
-          <option value="wise">Wise</option>
-          <option value="card" disabled>Card (USD) — coming soon</option>
-        </select>
+      {/* Method Segmented Control */}
+      <div className="mb-6 flex justify-center">
+        <div className="inline-flex items-center gap-1 bg-secondary rounded-lg p-1 border border-border">
+          {([
+            { id: 'bank_gbp', label: 'Bank (GBP)' },
+            { id: 'paypal', label: 'PayPal' },
+            { id: 'wise', label: 'Wise' },
+          ] as const).map((opt) => (
+            <button
+              key={opt.id}
+              onClick={() => setMethod(opt.id)}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                method === opt.id
+                  ? 'bg-surface text-text-primary shadow-sm border border-border'
+                  : 'text-text-secondary hover:text-text-primary'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {method === 'paypal' ? (

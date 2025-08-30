@@ -85,6 +85,15 @@ const BiographyModal: React.FC<BiographyModalProps> = ({ open, onClose }) => {
       <div className="relative z-10 w-[92vw] max-w-3xl max-h-[80vh] overflow-y-auto rounded-2xl bg-surface border border-border shadow-xl p-6 md:p-8">
         <div className="flex items-start justify-between">
           <h3 className="text-2xl font-display text-text-primary">Biography</h3>
+          <div className="flex items-center gap-2">
+            <a
+              href="/biography.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full px-3 py-1 text-sm text-text-primary border border-border bg-surface hover:bg-secondary"
+            >
+              Open PDF
+            </a>
           <button
             onClick={onClose}
             className="ml-4 rounded-full px-3 py-1 text-sm text-text-secondary hover:text-text-primary hover:bg-secondary"
@@ -92,6 +101,7 @@ const BiographyModal: React.FC<BiographyModalProps> = ({ open, onClose }) => {
           >
             Close
           </button>
+          </div>
         </div>
         <div className="mt-4 text-sm leading-7">
           {renderBiography(BiographyText)}

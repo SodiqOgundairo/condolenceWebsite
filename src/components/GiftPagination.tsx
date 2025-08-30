@@ -3,7 +3,7 @@ import CondolenceGifts from './CondolenceGifts';
 import InternationalGifts from './InternationalGifts';
 
 const GiftPagination: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'local' | 'international'>('local');
+  const [activeTab, setActiveTab] = useState<'local' | 'international'>('international');
 
   const tabs = [
     {
@@ -13,7 +13,7 @@ const GiftPagination: React.FC = () => {
     },
     {
       id: 'international' as const,
-      label: 'Other',
+      label: 'Dollar / Pound',
       description: ''
     }
   ];
