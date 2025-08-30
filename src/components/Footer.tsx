@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
           Email tribute letters, or contact children directly at
           {' '}
           <a
-            href="mailto:cont@tervergemade.life"
+            href="mailto:contact@tervergemade.life"
             className="text-primary hover:underline font-medium"
           >
             cont@tervergemade.life
