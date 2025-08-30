@@ -142,32 +142,32 @@ const InternationalGifts: React.FC = () => {
       ) : method === 'bank_gbp' ? (
         <div className="space-y-4">
           <div className="p-4 rounded-xl bg-secondary/60 border border-border space-y-2">
-            <h4 className="font-semibold text-text-primary">UK Bank Transfer (GBP)</h4>
-            <div className="grid grid-cols-1 gap-3 text-sm">
+            <h4 className="text-sm font-medium text-text-primary">UK Bank Transfer (GBP)</h4>
+            <div className="grid grid-cols-1 gap-3 text-sm text-text-secondary">
               <div className="flex items-center justify-between">
-                <span className="text-text-secondary">Account Name</span>
+                <span className="font-medium text-text-primary">Account Name:</span>
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-text-primary">Mamfe-ter Gemade</span>
+                  <span>Mamfe-ter Gemade</span>
                   <button onClick={() => copy('Mamfe-ter Gemade')} className="text-xs text-primary hover:underline">Copy</button>
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-text-secondary">Bank</span>
+                <span className="font-medium text-text-primary">Bank:</span>
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-text-primary">Barclays</span>
+                  <span>Barclays</span>
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-text-secondary">Sort Code</span>
+                <span className="font-medium text-text-primary">Sort Code:</span>
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-text-primary">20-89-16</span>
+                  <span>20-89-16</span>
                   <button onClick={() => copy('20-89-16')} className="text-xs text-primary hover:underline">Copy</button>
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-text-secondary">Account Number</span>
+                <span className="font-medium text-text-primary">Account Number:</span>
                 <div className="flex items-center gap-2">
-                  <span className="font-medium text-text-primary">63452751</span>
+                  <span>63452751</span>
                   <button onClick={() => copy('63452751')} className="text-xs text-primary hover:underline">Copy</button>
                 </div>
               </div>
