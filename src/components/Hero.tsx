@@ -40,6 +40,12 @@ const Hero: React.FC<Props> = ({ onOpenBiography, onGoToGifts, onOpenBurial }) =
               >
                 Burial Details
               </button>
+              <a
+                href="/photos"
+                className="px-4 py-2 rounded-full border border-border text-text-primary bg-surface hover:bg-secondary transition"
+              >
+                Share a Photo
+              </a>
               <button
                 type="button"
                 onClick={onGoToGifts}
